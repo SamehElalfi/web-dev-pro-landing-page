@@ -65,6 +65,10 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
+header.page__header {
+  transition: 0.3s all ease-in-out;
+}
+
 .navbar__menu ul {
   padding-left: 0;
   margin: 0;
@@ -210,7 +214,7 @@ section.your-active-class {
   background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0) 100%
+    rgba(0, 0, 0, 0.2) 100%
   );
 }
 
@@ -238,8 +242,9 @@ section.your-active-class .landing__container::after {
 div#move-to-top {
   position: fixed;
   cursor: pointer;
-  right: -50px;
+  right: 50px;
   bottom: 50px;
+  transition: 0.5s all ease-in-out;
 }
 
 div#move-to-top svg {
@@ -251,11 +256,6 @@ div#move-to-top svg {
 
 div#move-to-top svg:hover {
   fill: rgba(255, 255, 255, 1);
-}
-
-.show__move-top-button {
-  display: block;
-  animation: right-to-left 0.5s linear 0s forwards;
 }
 
 /* Section Active Styles Keyframe Animations */

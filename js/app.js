@@ -20,6 +20,10 @@
 const navbar = document.getElementById("navbar__list");
 const sectionActiveClass = "your-active-class";
 const topButton = document.getElementById("move-to-top");
+const header = document.querySelector("header.page__header");
+
+// Setup isScrolling variable
+let isScrolling;
 
 /**
  * End Global Variables
@@ -27,11 +31,11 @@ const topButton = document.getElementById("move-to-top");
  *
  */
 
-function getAllSections() {
+const getAllSections = () => {
   return document.querySelectorAll("main section");
-}
+};
 
-function buildListItem(sectionName, sectionID) {
+const buildListItem = (sectionName, sectionID) => {
   const listItem = document.createElement("li");
   const span = document.createElement("span");
   listItem.appendChild(span);
@@ -41,16 +45,16 @@ function buildListItem(sectionName, sectionID) {
   span.textContent = sectionName;
 
   return listItem;
-}
+};
 
-function removeActiveClassFromAllSections() {
+const removeActiveClassFromAllSections = () => {
   const sections = document.querySelectorAll(`.${sectionActiveClass}`);
   for (const section of sections) {
     section.classList.remove(sectionActiveClass);
   }
-}
+};
 
-function isElementVisible(el) {
+const isElementVisible = (el) => {
   const bouncing = el.getBoundingClientRect();
 
   // check if element is completely visible
@@ -58,7 +62,7 @@ function isElementVisible(el) {
     return true;
   }
   return false;
-}
+};
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -66,7 +70,7 @@ function isElementVisible(el) {
  */
 
 // build the nav
-function buildNav(sections) {
+const buildNav = (sections) => {
   const navFragment = document.createDocumentFragment();
   const navbar = document.getElementById("navbar__list");
 
@@ -79,16 +83,16 @@ function buildNav(sections) {
   }
 
   navbar.appendChild(navFragment);
-}
+};
 
 // Add class 'active' to section when near top of viewport
-function addActiveClass(el) {
+const addActiveClass = (el) => {
   removeActiveClassFromAllSections();
   el.classList.add(sectionActiveClass);
-}
+};
 
 // Scroll to anchor ID using scrollTO event
-function scrollToSection(sectionID) {
+const scrollToSection = (sectionID) => {
   const section = document.getElementById(sectionID);
 
   const sectionTopPosition =
@@ -98,8 +102,39 @@ function scrollToSection(sectionID) {
   // scrollIntoView might be used but it does not has good support in some browsers
   // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
   // section.scrollIntoView({ behavior: "smooth" });
-}
+};
 
+const setSectionAsActive = (_) => {
+  const sections = getAllSections();
+  for (const section of sections) {
+    // check if section is completely visible
+    sectionVisible = isElementVisible(section);
+
+    if (sectionVisible) {
+      addActiveClass(section);
+      break;
+    }
+  }
+};
+
+const hideNavOnStopScrolling = (_) => {
+  window.clearTimeout(isScrolling);
+  header.style.opacity = "1";
+
+  // Set a timeout to run after scrolling ends
+  isScrolling = setTimeout(function () {
+    header.style.opacity = "0";
+  }, 3000);
+};
+
+const hideTopButtonAtTop = (_) => {
+  if (window.pageYOffset < 100) {
+    // hide the button
+    topButton.style.opacity = "0";
+  } else {
+    topButton.style.opacity = "1";
+  }
+};
 /**
  * End Main Functions
  * Begin Events
@@ -114,27 +149,15 @@ navbar.addEventListener("click", (event) => {
   }
 });
 
-// Set sections as active
 document.addEventListener("scroll", (event) => {
-  const sections = getAllSections();
-  for (const section of sections) {
-    // check if section is completely visible
-    sectionVisible = isElementVisible(section);
+  // Set sections as active
+  setSectionAsActive();
 
-    if (sectionVisible) {
-      addActiveClass(section);
-      break;
-    }
-  }
-});
+  // Hide the navbar if the user stop scrolling for 3 seconds
+  hideNavOnStopScrolling();
 
-// Hide move-to-top button at the top of the page
-document.addEventListener("scroll", (event) => {
-  if (window.pageYOffset < 100) {
-    topButton.classList.remove("show__move-top-button");
-  } else {
-    topButton.classList.add("show__move-top-button");
-  }
+  // Hide move-to-top button at the top of the page
+  hideTopButtonAtTop();
 });
 
 // Move to the top when click on the button
@@ -142,8 +165,8 @@ topButton.addEventListener("click", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-function main() {
+const main = () => {
   const sections = getAllSections();
   buildNav(sections);
-}
+};
 main();
