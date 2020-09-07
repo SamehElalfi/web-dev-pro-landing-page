@@ -23,6 +23,7 @@ const topButton = document.getElementById("move-to-top");
 const header = document.querySelector("header.page__header");
 
 // Setup isScrolling variable
+// used to hide navbar after 3 seconds
 let isScrolling;
 
 /**
@@ -31,6 +32,7 @@ let isScrolling;
  *
  */
 
+// Return all sections of the landing page
 const getAllSections = () => {
   return document.querySelectorAll("main section");
 };
@@ -123,7 +125,7 @@ const hideNavOnStopScrolling = (_) => {
 
   // Set a timeout to run after scrolling ends
   isScrolling = setTimeout(function () {
-    header.style.opacity = "0";
+    if (window.pageYOffset > 0) header.style.opacity = "0";
   }, 3000);
 };
 
@@ -135,6 +137,7 @@ const hideTopButtonAtTop = (_) => {
     topButton.style.opacity = "1";
   }
 };
+
 /**
  * End Main Functions
  * Begin Events
@@ -149,6 +152,12 @@ navbar.addEventListener("click", (event) => {
   }
 });
 
+// Move to the top when click on the button
+topButton.addEventListener("click", (event) => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Scroll events
 document.addEventListener("scroll", (event) => {
   // Set sections as active
   setSectionAsActive();
@@ -160,11 +169,16 @@ document.addEventListener("scroll", (event) => {
   hideTopButtonAtTop();
 });
 
-// Move to the top when click on the button
-topButton.addEventListener("click", (event) => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+// Make sections collapsible.
+document.addEventListener("click", (event) => {
+  if (event.target.nodeName == "H2") {
+    const parent = event.target.parentElement;
+    const paragraphs = parent.querySelectorAll("p");
+    for (const p of paragraphs) {
+      p.classList.toggle("hide");
+    }
+  }
 });
-
 const main = () => {
   const sections = getAllSections();
   buildNav(sections);

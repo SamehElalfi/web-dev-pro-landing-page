@@ -45,6 +45,8 @@ h2 {
 p {
   line-height: 1.6em;
   color: #eee;
+  text-align: justify;
+  font-family: tahoma;
 }
 
 /* ---- Layout Rules ---- */
@@ -59,7 +61,7 @@ main {
 
 section {
   position: relative;
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 /* ---- Module Rules ---- */
@@ -216,6 +218,8 @@ section.your-active-class {
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.2) 100%
   );
+  border-radius: 5px;
+  box-shadow: 0 0 8px -4px rgba(0, 0, 0, 0.5);
 }
 
 section.your-active-class .landing__container::before {
@@ -266,4 +270,8 @@ div#move-to-top svg:hover {
   to {
     right: 50px;
   }
+}
+
+.hide {
+  display: none !important;
 }
