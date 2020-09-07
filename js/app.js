@@ -21,6 +21,7 @@ const navbar = document.getElementById("navbar__list");
 const sectionActiveClass = "your-active-class";
 const topButton = document.getElementById("move-to-top");
 const header = document.querySelector("header.page__header");
+const mainTag = document.querySelector("main");
 
 // Setup isScrolling variable
 // used to hide navbar after 3 seconds
@@ -94,19 +95,21 @@ const addActiveClass = (el) => {
 };
 
 // Scroll to anchor ID using scrollTO event
-const scrollToSection = (sectionID) => {
-  const section = document.getElementById(sectionID);
+const scrollToSection = (event) => {
+  const sectionID = event.target.getAttribute("data-section");
+  if (event.target.nodeName == "SPAN") {
+    const section = document.getElementById(sectionID);
 
-  const sectionTopPosition =
-    section.getBoundingClientRect().top + window.pageYOffset;
-  window.scrollTo({ top: sectionTopPosition, behavior: "smooth" });
-
+    const sectionTopPosition =
+      section.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: sectionTopPosition, behavior: "smooth" });
+  }
   // scrollIntoView might be used but it does not has good support in some browsers
   // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
   // section.scrollIntoView({ behavior: "smooth" });
 };
 
-const setSectionAsActive = (_) => {
+const setSectionAsActive = () => {
   const sections = getAllSections();
   for (const section of sections) {
     // check if section is completely visible
@@ -119,7 +122,7 @@ const setSectionAsActive = (_) => {
   }
 };
 
-const hideNavOnStopScrolling = (_) => {
+const hideNavOnStopScrolling = () => {
   window.clearTimeout(isScrolling);
   header.style.opacity = "1";
 
@@ -129,12 +132,21 @@ const hideNavOnStopScrolling = (_) => {
   }, 3000);
 };
 
-const hideTopButtonAtTop = (_) => {
+const hideTopButtonAtTop = () => {
   if (window.pageYOffset < 100) {
     // hide the button
     topButton.style.opacity = "0";
   } else {
     topButton.style.opacity = "1";
+  }
+};
+
+const toggleSection = (event) => {
+  if (event.target.nodeName != "H2") return;
+  const parent = event.target.parentElement;
+  const paragraphs = parent.querySelectorAll("p");
+  for (const p of paragraphs) {
+    p.classList.toggle("hide");
   }
 };
 
@@ -145,40 +157,31 @@ const hideTopButtonAtTop = (_) => {
  */
 
 // Scroll to section on link click
-navbar.addEventListener("click", (event) => {
-  const sectionID = event.target.getAttribute("data-section");
-  if (event.target.nodeName == "SPAN") {
-    scrollToSection(sectionID);
-  }
-});
+navbar.addEventListener("click", scrollToSection);
 
 // Move to the top when click on the button
 topButton.addEventListener("click", (event) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Scroll events
-document.addEventListener("scroll", (event) => {
-  // Set sections as active
-  setSectionAsActive();
+// Set sections as active
+document.addEventListener("scroll", setSectionAsActive);
 
-  // Hide the navbar if the user stop scrolling for 3 seconds
-  hideNavOnStopScrolling();
+// Hide the navbar if the user stop scrolling for 3 seconds
+document.addEventListener("scroll", hideNavOnStopScrolling);
 
-  // Hide move-to-top button at the top of the page
-  hideTopButtonAtTop();
-});
+// Hide move-to-top button at the top of the page
+document.addEventListener("scroll", hideTopButtonAtTop);
 
 // Make sections collapsible.
-document.addEventListener("click", (event) => {
-  if (event.target.nodeName == "H2") {
-    const parent = event.target.parentElement;
-    const paragraphs = parent.querySelectorAll("p");
-    for (const p of paragraphs) {
-      p.classList.toggle("hide");
-    }
-  }
-});
+mainTag.addEventListener("click", toggleSection);
+
+/**
+ * End Events
+ * Begin Main Script
+ *
+ */
+
 const main = () => {
   const sections = getAllSections();
   buildNav(sections);

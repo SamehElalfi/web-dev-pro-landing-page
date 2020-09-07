@@ -40,6 +40,7 @@ h2 {
   font-family: "Oxygen", Sans-Serif;
   font-size: 3em;
   color: #fff;
+  cursor: pointer;
 }
 
 p {
@@ -274,4 +275,7 @@ div#move-to-top svg:hover {
 
 .hide {
   display: none !important;
+}
+.text-center {
+  text-align: center;
 }
