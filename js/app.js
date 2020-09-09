@@ -18,6 +18,12 @@
  *
  */
 
+const navbarList = document.querySelector("#navbar__list");
+const topButton = document.querySelector("#move-to-top");
+const navbar = document.querySelector("header.page__header");
+const allSections = document.querySelectorAll("section");
+const activeClass = "active-section";
+
 /**
  * End Global Variables
  * Start Helper Functions
