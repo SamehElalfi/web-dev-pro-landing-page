@@ -10,12 +10,8 @@
 
 /* ---- Base Rules ---- */
 body {
-  background: rgb(136, 203, 171);
-  background: linear-gradient(
-    0deg,
-    rgba(136, 203, 171, 1) 0%,
-    rgba(0, 13, 60, 1) 100%
-  );
+  background: #2b2e4a;
+  background: linear-gradient(0deg, #903749 0%, #2b2e4a);
   margin: 0;
   font-family: "Merriweather", serif;
   color: #fff;
@@ -109,7 +105,7 @@ header.page__header {
 
 /* Footer Styles */
 .page__footer {
-  background: #000;
+  background: #53354a;
   padding: 3em;
   color: #fff;
 }

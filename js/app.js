@@ -126,11 +126,14 @@ const hideBackToTopBtn = () => {
   }
 };
 
+// Scroll back to the top of the page
 const backToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
+// toggle sections
 const collapseSection = (event) => {
+  // Toggle the section when click on the title only
   if (event.target.nodeName != "H2") return;
 
   const parent = event.target.parentElement;
