@@ -20,7 +20,7 @@
 
 const navbarList = document.querySelector("#navbar__list");
 const topButton = document.querySelector("#move-to-top");
-const navbar = document.querySelector("header.page__header");
+const header = document.querySelector("header.page__header");
 const allSections = document.querySelectorAll("section");
 const activeClass = "active-section";
 
@@ -30,6 +30,16 @@ const activeClass = "active-section";
  *
  */
 
+// Return new item in the navbar for any given section
+const createNavItem = (section) => {
+  const sectionID = section.getAttribute("id");
+  const sectionName = section.getAttribute("data-nav");
+  const item = document.createElement("li");
+  item.innerHTML = `<a href="#${sectionID}" class="menu__link">${sectionName}</a>`;
+
+  return item;
+};
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -37,6 +47,15 @@ const activeClass = "active-section";
  */
 
 // build the nav
+const buildNav = () => {
+  const fragment = document.createDocumentFragment();
+  for (const section of allSections) {
+    const item = createNavItem(section);
+    fragment.appendChild(item);
+  }
+
+  navbarList.appendChild(fragment);
+};
 
 // Add class 'active' to section when near top of viewport
 
@@ -49,6 +68,7 @@ const activeClass = "active-section";
  */
 
 // Build menu
+document.addEventListener("DOMContentLoaded", buildNav);
 
 // Scroll to section on link click
 

@@ -3,6 +3,8 @@
 ## Added
 
 - ChangeLog file
+- All global variables
+- Crearted function to build the navbar menu
 
 ## Changed
 
