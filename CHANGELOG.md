@@ -9,6 +9,7 @@
 - Scroll to section when navbar item is clicked
 - Hide fixed navigation bar while not scrolling
 - Make sections collapsible.
+- Created README file.
 
 ## Changed
 
