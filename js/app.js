@@ -44,7 +44,7 @@ const createNavItem = (section) => {
 const inView = (el) => {
   const bouncing = el.getBoundingClientRect();
 
-  return bouncing.top >= 0 && bouncing.top < window.innerHeight;
+  return bouncing.top >= 0 && bouncing.bottom <= window.innerHeight;
 };
 
 // Remove active class from every section
@@ -87,7 +87,15 @@ const activateSection = (section) => {
 };
 
 // Scroll to anchor ID using scrollTO event
+const scrollToSection = (e) => {
+  // The clicked target must be an anchor tag
+  if (e.target.nodeName != "A") return;
 
+  e.preventDefault();
+  const sectionID = e.target.getAttribute("href");
+  const section = document.querySelector(sectionID);
+  section.scrollIntoView({ behavior: "smooth" });
+};
 /**
  * End Main Functions
  * Begin Events
@@ -98,6 +106,7 @@ const activateSection = (section) => {
 document.addEventListener("DOMContentLoaded", buildNav);
 
 // Scroll to section on link click
+navbarList.addEventListener("click", scrollToSection);
 
 // Set sections as active
 document.addEventListener("scroll", activateSection);
