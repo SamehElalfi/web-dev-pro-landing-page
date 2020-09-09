@@ -21,7 +21,8 @@
 // const startingTime = performance.now();
 
 const navbarList = document.querySelector("#navbar__list");
-const topButton = document.querySelector("#move-to-top");
+const main = document.querySelector("main");
+const topButton = document.querySelector("#back-to-top");
 const header = document.querySelector("header.page__header");
 const allSections = document.querySelectorAll("section");
 const activeClass = "active-section";
@@ -116,6 +117,26 @@ const hideNavBar = () => {
   }, 3000);
 };
 
+const hideBackToTopBtn = () => {
+  // Hide the button on the top of the page
+  if (window.scrollY <= window.innerHeight) {
+    topButton.style.opacity = "0";
+  } else {
+    topButton.style.opacity = "1";
+  }
+};
+
+const backToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const collapseSection = (event) => {
+  if (event.target.nodeName != "H2") return;
+
+  const parent = event.target.parentElement;
+  const content = parent.querySelector(".content");
+  content.classList.toggle("hide");
+};
 /**
  * End Main Functions
  * Begin Events
@@ -133,6 +154,16 @@ document.addEventListener("scroll", activateSection);
 
 // Hide fixed navigation bar while not scrolling
 document.addEventListener("scroll", hideNavBar);
+
+// scroll to top of the page
+topButton.addEventListener("click", backToTop);
+
+// scroll to top button on the page that’s only visible
+// when the user scrolls below the fold of the page.
+document.addEventListener("scroll", hideBackToTopBtn);
+
+// Make sections collapsible.
+main.addEventListener("click", collapseSection);
 
 // const endingTime = performance.now();
 // console.log(`Page loaded within ${endingTime - startingTime}`);

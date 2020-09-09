@@ -8,6 +8,7 @@
 - Add functionality to distinguish the section in view.
 - Scroll to section when navbar item is clicked
 - Hide fixed navigation bar while not scrolling
+- Make sections collapsible.
 
 ## Changed
 
@@ -15,6 +16,7 @@
 - Renamed ".your-active-class" to ".active-section"
 - Created 6 sections in index.html
 - Fixed inView function (activate element when it's fully visible)
+- Changed all the content of the sections.
 
 ## Removed
 

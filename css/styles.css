@@ -46,8 +46,8 @@ h2 {
 p {
   line-height: 1.6em;
   color: #eee;
-  text-align: justify;
-  font-family: tahoma;
+  /* text-align: justify; */
+  /* font-family: tahoma; */
 }
 
 /* ---- Layout Rules ---- */
@@ -62,6 +62,7 @@ main {
 
 section {
   position: relative;
+  overflow: hidden;
   /* min-height: 80vh; */
 }
 
@@ -75,7 +76,7 @@ header.page__header {
 .navbar__menu ul {
   padding-left: 0;
   margin: 0;
-  text-align: right;
+  text-align: center;
 }
 
 .navbar__menu li {
@@ -126,8 +127,9 @@ header.page__header {
 
 @media only screen and (min-width: 35em) {
   .landing__container {
-    max-width: 50em;
-    padding: 4em;
+    max-width: 94%;
+    padding: 2em;
+    margin: 2em auto;
   }
 }
 
@@ -221,8 +223,8 @@ section.active-section {
   );
   border-radius: 5px;
   box-shadow: 0 0 8px -4px rgba(0, 0, 0, 0.5);
+  margin: 2em 0;
 }
-
 section.active-section .landing__container::before {
   opacity: 1;
   animation: rotate 4s linear 0s infinite forwards;
@@ -243,8 +245,8 @@ section.active-section .landing__container::after {
   }
 }
 
-/* move-to-top arrow */
-div#move-to-top {
+/* back-to-top arrow */
+div#back-to-top {
   position: fixed;
   cursor: pointer;
   right: 50px;
@@ -252,14 +254,14 @@ div#move-to-top {
   transition: 0.5s all ease-in-out;
 }
 
-div#move-to-top svg {
+div#back-to-top svg {
   fill: rgba(255, 255, 255, 0.5);
   transition: 0.1s all ease-in-out;
   width: 50px;
   height: 50px;
 }
 
-div#move-to-top svg:hover {
+div#back-to-top svg:hover {
   fill: rgba(255, 255, 255, 1);
 }
 
@@ -274,8 +276,13 @@ div#move-to-top svg:hover {
 }
 
 .hide {
-  display: none !important;
+  height: 0 !important;
+  transition: 1s all ease-in-out;
 }
 .text-center {
   text-align: center;
+}
+
+.content {
+  transition: 1s all ease-in-out;
 }
