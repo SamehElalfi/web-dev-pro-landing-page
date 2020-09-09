@@ -7,6 +7,7 @@
 - Crearted function to build the navbar menu
 - Add functionality to distinguish the section in view.
 - Scroll to section when navbar item is clicked
+- Hide fixed navigation bar while not scrolling
 
 ## Changed
 

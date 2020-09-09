@@ -18,11 +18,17 @@
  *
  */
 
+// const startingTime = performance.now();
+
 const navbarList = document.querySelector("#navbar__list");
 const topButton = document.querySelector("#move-to-top");
 const header = document.querySelector("header.page__header");
 const allSections = document.querySelectorAll("section");
 const activeClass = "active-section";
+
+// isScrolling is using to hide the navigation bar after
+// 3 seconds with no scrolling
+let isScrolling;
 
 /**
  * End Global Variables
@@ -96,6 +102,20 @@ const scrollToSection = (e) => {
   const section = document.querySelector(sectionID);
   section.scrollIntoView({ behavior: "smooth" });
 };
+
+// Hide fixed navigation bar after 3 seconds with no scrolling
+const hideNavBar = () => {
+  header.style.opacity = "1";
+  clearTimeout(isScrolling);
+
+  // Make navbar visible on the top of the page
+  if (window.scrollY <= window.innerHeight) return;
+
+  isScrolling = setTimeout(() => {
+    header.style.opacity = "0";
+  }, 3000);
+};
+
 /**
  * End Main Functions
  * Begin Events
@@ -110,3 +130,9 @@ navbarList.addEventListener("click", scrollToSection);
 
 // Set sections as active
 document.addEventListener("scroll", activateSection);
+
+// Hide fixed navigation bar while not scrolling
+document.addEventListener("scroll", hideNavBar);
+
+// const endingTime = performance.now();
+// console.log(`Page loaded within ${endingTime - startingTime}`);
