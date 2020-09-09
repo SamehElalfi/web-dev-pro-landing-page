@@ -40,6 +40,19 @@ const createNavItem = (section) => {
   return item;
 };
 
+// return true if the element is in view port
+const inView = (el) => {
+  const bouncing = el.getBoundingClientRect();
+
+  return bouncing.top >= 0 && bouncing.top < window.innerHeight;
+};
+
+// Remove active class from every section
+const removeActiveClass = () => {
+  activeSection = document.querySelector(`.${activeClass}`);
+  activeSection.classList.remove(activeClass);
+};
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -50,14 +63,28 @@ const createNavItem = (section) => {
 const buildNav = () => {
   const fragment = document.createDocumentFragment();
   for (const section of allSections) {
+    // Create the HTML content for the item
     const item = createNavItem(section);
+
     fragment.appendChild(item);
   }
 
   navbarList.appendChild(fragment);
 };
 
-// Add class 'active' to section when near top of viewport
+// Add class 'active-section' to section when near top of viewport
+const activateSection = (section) => {
+  for (const section of allSections) {
+    if (inView(section)) {
+      // Remove active class from other sections
+      // This function must be called before adding another active class
+      // to another section
+      removeActiveClass();
+
+      section.classList.add(activeClass);
+    }
+  }
+};
 
 // Scroll to anchor ID using scrollTO event
 
@@ -73,3 +100,4 @@ document.addEventListener("DOMContentLoaded", buildNav);
 // Scroll to section on link click
 
 // Set sections as active
+document.addEventListener("scroll", activateSection);

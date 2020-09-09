@@ -5,6 +5,7 @@
 - ChangeLog file
 - All global variables
 - Crearted function to build the navbar menu
+- Add functionality to distinguish the section in view.
 
 ## Changed
 
